@@ -1,0 +1,307 @@
+{% extends "dappx/base.html" %}
+{% block body_block %}
+{% load static %}
+{% load mathfilters %}
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+body {
+  font-family: "Lato", sans-serif;
+}
+
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: rgb(188, 144, 209);
+  padding: 6px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  justify-content: center;
+  position: relative;
+  left: -4px;
+}
+.button2 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid rgb(179, 211, 173);
+  border-radius:4px;
+}
+
+.button2:hover {
+  background-color: rgb(179, 211, 173);
+  color: white;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+.discount_price {
+  color: grey;
+  font-size: 18px;
+}
+.no_discount {
+  color: white;
+  font-size: 18px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  opacity: 0.9; 
+  /* filter: brightness(98%);  */
+}
+.grid-container {
+  display: grid;
+  grid-gap: 50px;
+  grid-template-columns: auto auto auto;
+  /* background-color: #2196F3; */
+  padding: 10px;
+}
+
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+
+
+{% if submitbutton == 'Search' and request.GET.q != '' %}
+
+  {% if results  %}
+    {% if filter %}
+     <h2>Results for <b>{{filter}}</b></h2>
+        <!--div style=" width:auto; border:2px solid  rgb(127, 190, 115); height:100px; padding-top:5.5px; border-radius: 10px; " class="card"-->
+    
+        {% else %}
+        <h2>Results for <b>{{ request.GET.q }}</b></h2>
+           <!--div style=" width:auto; border:2px solid  rgb(127, 190, 115); height:100px; padding-top:5.5px; border-radius: 10px; " class="card"-->
+      <div style=" width:auto; background-color:rgb(228, 245, 225); height:60px; padding-bottom:auto; border-radius: 10px; " >
+        <div class="container">
+          <h3 style="float: left; margin-top: 15px; color: rgb(107, 151, 101);"> smart search </h3>
+          
+        <form style="float:left; margin-left: 420px; margin-bottom: 30px;" action="{% url 'dappx:listby' search_filter=request.GET.q filter_t=None minimum_price=None maximum_price=None %}" >
+            <h3 style="display: inline-block; margin-top: 15px; color: rgb(107, 151, 101);"> price  &nbsp;</h3>
+            <input class="button button2" type="number" name="minprice" value="{{request.GET.minprice}}" min="0" Max="90000" placeholder="Min" required>
+            <input class="button button2" type="number" name="maxprice" value="{{request.GET.maxprice}}" min="0" Max="90000" placeholder="Max" required> 
+            <input class="button button2" type="submit" name="submit" value="Search" method="GET" >
+        </form>
+     
+    
+  
+        <div class="w3-dropdown-hover w3-right">
+        <button class="w3-button button2" style="border-radius:4px; margin-right: 30px; margin-top: 10px;">List by</button>
+        <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+          <a href="{% url 'dappx:listby' search_filter=request.GET.q filter_t="increasing" minimum_price=None maximum_price=None %}"  class="w3-bar-item w3-button">Increasing price</a>
+          <a href="{% url 'dappx:listby' search_filter=request.GET.q filter_t="decreasing" minimum_price=None maximum_price=None %}" class="w3-bar-item w3-button">Decreasing price</a> 
+          <a href="{% url 'dappx:listby' search_filter=request.GET.q  filter_t="alphabetical" minimum_price=None maximum_price=None %}" class="w3-bar-item w3-button">Alphabetical order</a>
+          <a href="{% url 'dappx:listby' search_filter=request.GET.q  filter_t="nonalphabetical" minimum_price=None maximum_price=None %}" class="w3-bar-item w3-button">Non-alphabetical order</a>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  
+    {% endif %}
+    
+ 
+  
+    <div class="w3-clear"></div>
+  
+
+    <div class="grid-container">
+
+
+    
+      {% for rs in results %}  
+        
+      <div class="card">
+        <img src="{{rs.image.url}}"alt ="" style="width:100%;">
+        <h1>{{rs.name}}</h1>
+        <p class="price">{{rs.price}} tl</p>
+        {% if rs.changedprice != rs.price %}
+        <p class="discount_price "><em>Discounted price: {{rs.changedprice}} TL</em> </p>
+        <p class="discount_price ">{{rs.price|sub:rs.changedprice}} TL Saved!</p>
+        {% else %}
+        <p class="no_discount">DISCOUNTED PRICE: -</p>
+        <p class="no_discount">0 TL Saved</p>
+        {% endif %}
+        <p>{{rs.ShortDesc}}</p>
+        <p><form method='GET' action="{% url 'dappx:details' product_id=rs.id %}"><button style="background: #a6ce7e;" >Details</button></form></p>
+        <p>
+          <form method='GET' action="{% url 'dappx:cart' pr_id=rs.id %}"><button style="background: #d9534f;" type="submit" >Add to Cart</button></form>
+        </p>
+      </div>
+        {% endfor %}
+
+
+</div>
+
+  </div>
+
+
+
+  {% elif categresults  %}
+  {% if filter %}
+     <h2>Results for <b>{{filter}}</b></h2>
+        <!--div style=" width:auto; border:2px solid  rgb(127, 190, 115); height:100px; padding-top:5.5px; border-radius: 10px; " class="card"-->
+    
+        {% else %}
+        <h2>Results for <b>{{ request.GET.q }}</b></h2>
+           <!--div style=" width:auto; border:2px solid  rgb(127, 190, 115); height:100px; padding-top:5.5px; border-radius: 10px; " class="card"-->
+      <div style=" width:auto; background-color:rgb(228, 245, 225); height:60px; padding-bottom:auto; border-radius: 10px; " >
+        <div class="container">
+          <h3 style="float: left; margin-top: 15px; color: rgb(107, 151, 101);"> smart search </h3>
+          
+          <form style="float:left; margin-left: 420px; margin-bottom: 30px;" action="{% url 'dappx:listby' search_filter=request.GET.q filter_t=None minimum_price=None maximum_price=None %}" >
+              <h3 style="display: inline-block; margin-top: 15px; color: rgb(107, 151, 101);"> price  &nbsp;</h3>
+              <input class="button button2" type="number" name="minprice" value="{{request.GET.minprice}}" min="0" Max="90000" placeholder="Min" required>
+              <input class="button button2" type="number" name="maxprice" value="{{request.GET.maxprice}}" min="0" Max="90000" placeholder="Max" required> 
+              <input class="button button2" type="submit" name="submit" value="Search" method="GET" >
+          </form>
+     
+    
+  
+          <div class="w3-dropdown-hover w3-right">
+            <button class="w3-button button2" style="border-radius:4px; margin-right: 30px; margin-top: 10px;">List by</button>
+            <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+              <a href="{% url 'dappx:listby' search_filter=request.GET.q filter_t="increasing" minimum_price=None maximum_price=None %}"  class="w3-bar-item w3-button">Increasing price</a>
+              <a href="{% url 'dappx:listby' search_filter=request.GET.q filter_t="decreasing" minimum_price=None maximum_price=None %}" class="w3-bar-item w3-button">Decreasing price</a> 
+              <a href="{% url 'dappx:listby' search_filter=request.GET.q  filter_t="alphabetical" minimum_price=None maximum_price=None %}" class="w3-bar-item w3-button">Alphabetical order</a>
+              <a href="{% url 'dappx:listby' search_filter=request.GET.q  filter_t="nonalphabetical" minimum_price=None maximum_price=None %}" class="w3-bar-item w3-button">Non-alphabetical order</a>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    {% endif %}
+    
+
+  
+    <div class="w3-clear"></div>
+  
+    <div class="grid-container">
+      {% for categrs in categresults %}  
+      <div class="card">
+        <img src="{{categrs.image.url}}"alt ="" style="width:100%;">
+        <h1>{{categrs.name}}</h1>
+        <p class="price">{{categrs.price}} tl</p>
+        {% if categrs.changedprice != categrs.price %}
+        <p class="discount_price "><em>Discounted price: {{categrs.changedprice}} TL</em> </p>
+        <p class="discount_price ">{{categrs.price|sub:categrs.changedprice}} TL Saved!</p>
+        {% else %}
+        <p class="no_discount">DISCOUNTED PRICE: -</p>
+        <p class="no_discount">0 TL Saved</p>
+        {% endif %}
+        <p>{{categrs.ShortDesc}}</p>
+        <p><form method='GET' action="{% url 'dappx:details' product_id=categrs.id %}"><button style="background: #a6ce7e;" >Details</button></form></p>
+        <p>
+          <form method='GET' action="{% url 'dappx:cart' pr_id=categrs.id %}"><button style="background: #d9534f;" type="submit" >Add to Cart</button></form>
+        </p>
+      </div>
+        {% endfor %}
+
+
+</div> 
+  </div>
+  
+  
+  {% else %}
+  <h2 style="text-align:center">No results found matching your search</h2>
+
+  {% endif %}
+  
+{% elif submitbutton == 'Search' and request.GET.q == '' %}
+   
+
+
+
+
+
+<div class="container" >
+  <div class="jumbotron" style="width: 1100px; height:300px; text-align: center; background: url('/static/image/hm3.jpg') no-repeat;  background-size: 100%; opacity: 0.8;" > 
+   
+  <h1 style="text-align:center; color:aliceblue">You can search below!</h1>
+  
+</div>
+</div>
+<form class="form-inline ml-auto ex1" style="text-align: center" action="{% url 'dappx:search' %}" method="GET" value="{{request.GET.q}}">
+  <input style="width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; border: 2px solid rgb(0, 0, 0);border-radius: 4px;" 
+          type="text" name="q" value="{{request.GET.q}}" class="form-control mr-sm-2"   placeholder="Search...">
+  <input type="submit" name="submit" value="Search"class="btn btn-danger mt-3" style="margin-top: 6px; background-color: rgb(0, 0, 0); border-color:rgb(255, 255, 255) ; ">
+
+</form>
+{% else %}
+  <h2 style="text-align:center">No results found matching your search</h2>
+  
+{% endif %}
+
+
+
+
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+      <script>
+      //Get the button
+      var mybutton = document.getElementById("myBtn");
+      
+      // When the user scrolls down 20px from the top of the document, show the button
+      window.onscroll = function() {scrollFunction()};
+      
+      function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+          mybutton.style.display = "block";
+        } else {
+          mybutton.style.display = "none";
+        }
+      }
+      
+      // When the user clicks on the button, scroll to the top of the document
+      function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }
+      </script>
+{% endblock %}
+
+
+</body>
+</html>

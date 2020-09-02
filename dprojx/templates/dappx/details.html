@@ -1,0 +1,188 @@
+{% extends 'dappx/base.html' %}
+{% load static %}
+{% block body_block %}
+{% load mathfilters %}
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Base</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link type="text/css" rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+
+  
+
+</head>
+  
+
+<body>
+<div class="container">
+  <div class="jumbotron" style="width: 1100px; height:500px; text-align: center; background: url('/static/image/buyuk.png') no-repeat;  background-size: 100%; opacity: 1;" > 
+    {% if product  %}
+        <h1>Details of {{product.name}}</h1>
+    {% endif %}
+  </div>
+
+<div class="container">
+    <br></br>
+      <div class="col-sm-6" style = "border: solid rgb(128, 215, 221);border-radius: 15px 15px 15px 15px; color: black; ">
+          <div class="card" >
+            <div class="card-group col-xs-4" style="display: flex;">
+                <img src = "{{product.image.url}}"alt ="">
+                
+                <div class="card-body">
+                  <h2 class="card-text">{{product.ShortDesc}}</h2>
+                  <!--h4 class="card-title">{{product.name}}</h4-->
+                  <h6 class="card-subtitle mb-2 text-muted">{{product.brand}}</h6>
+                
+                  <div class="buy d-flex justify-content-between align-items-center">
+                    {% if product.price == product.changedprice %}
+                        <div class="price text-success"><h4 class="mt-4">{{product.price}} TL</h4></div>
+                    {% else %} 
+                      <div class="price text-success"><h5 class="mt-4">{{product.price}} TL</h5></div>
+                      <div class="price text-success"><h4 class="mt-4"><em>Discounted price: {{product.changedprice}} TL</em></h4></div>
+                      <div class="price text-success"><h5 class="mt-4">{{product.price|sub:product.changedprice}} TL saved</h5></div>
+                    {% endif %}
+                    <div>
+                      
+                      <div class="product-rating">                         
+                        <span class="fa fa-star checked" style="font-size: large ; color: rgba(255, 196, 0, 0.65);"></span>
+                        <span class="fa fa-star checked" style="font-size: large ; color: rgba(255, 196, 0, 0.65);"></span>
+                        <span class="fa fa-star checked" style="font-size: large ; color: rgba(255, 196, 0, 0.65);"></span>
+                        <span class="fa fa-star checked" style="font-size: large ; color: rgba(255, 196, 0, 0.65);"></span>
+                        <span class="fa fa-star checked" style="font-size: large ; color: rgba(255, 196, 0, 0.65);"></span>
+                      </div>
+                    </div>
+                    <a href="{% url 'dappx:cart' pr_id=product.id %}" class="btn btn-danger mt-3"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+                  <br></br>
+                  </div>
+                </div>
+              </div>
+        </div>
+      </div>
+
+
+</div>
+</div>
+<br> </br>
+<div class="container">
+<div class="col-md-20">
+  
+  <div class="row">
+    <div class="col-md-5" style = "border: solid rgb(128, 215, 221);border-radius: 15px 15px 15px 15px; color: black; background-color: rgb(223, 232, 235); ">
+      <div class="product-reviews">
+
+        <div class="single-review; " style="margin-top: 20px; margin-bottom: 20px;border-radius:  5px 5px 5px 5px; border:black;" >
+          <div class="review-heading" style="font-size: medium ; color: black;border-radius:  5px 5px 5px 5px; border: 1px black;">
+              <div ><a href="#"><i class="fa fa-user-o" style="font-size: large ; color: black; "></i>admin</a></div>
+              <div><a href="#"><i class="fa fa-clock-o" style="font-size: large ; color: black;"></i>June 1, 2020, 10:45 a.m.</a></div>
+              <div class="review-rating pull-right ">
+                  <i class="fa fa-star {% if rs.rate < 1 %}-o empty{% endif %}" style="font-size: large ; color: rgba(255, 196, 0, 0.65);"></i>
+                  <i class="fa fa-star {% if rs.rate < 2 %}-o empty{% endif %}" style="font-size: large ; color: rgba(255, 196, 0, 0.65);"></i>
+                  <i class="fa fa-star {% if rs.rate < 3 %}-o empty{% endif %}" style="font-size: large ; color: rgba(255, 196, 0, 0.65);"></i>
+                  <i class="fa fa-star {% if rs.rate < 4 %}-o empty{% endif %}" style="font-size: large ; color: rgba(255, 196, 0, 0.65);"></i>
+                  <i class="fa fa-star {% if rs.rate < 5 %}-o empty{% endif %}" style="font-size: large ; color: rgba(255, 196, 0, 0.65);"></i>
+              </div>
+          </div>
+      <div><a href="#"><i class="fa fa-envelope-open-o" style="font-size: large ; color: black;"></i> {{ rs.product }}</a></div>
+          <div class="review-body" style="font-size: large ; border: grey;">
+            <p>Very good!</p>
+          </div>
+      </div>
+
+          {% for rs in comments %}
+
+              <div class="single-review; " style="margin-top: 20px; margin-bottom: 20px;border-radius:  5px 5px 5px 5px; border:black;" >
+                  <div class="review-heading" style="font-size: medium ; color: black;border-radius:  5px 5px 5px 5px; border: 1px black;">
+                      <div ><a href="#"><i class="fa fa-user-o" style="font-size: large ; color: black; "></i>{{ rs.user.username }}</a></div>
+                      <div><a href="#"><i class="fa fa-clock-o" style="font-size: large ; color: black;"></i> {{ rs.create_at }}</a></div>
+                      <div class="review-rating pull-right ">
+                          <i class="fa fa-star {% if rs.rate < 1 %}-o empty{% endif %}" style="font-size: large ; color: rgba(255, 196, 0, 0.65);"></i>
+                          <i class="fa fa-star {% if rs.rate < 2 %}-o empty{% endif %}" style="font-size: large ; color: rgba(255, 196, 0, 0.65);"></i>
+                          <i class="fa fa-star {% if rs.rate < 3 %}-o empty{% endif %}" style="font-size: large ; color: rgba(255, 196, 0, 0.65);"></i>
+                          <i class="fa fa-star {% if rs.rate < 4 %}-o empty{% endif %}" style="font-size: large ; color: rgba(255, 196, 0, 0.65);"></i>
+                          <i class="fa fa-star {% if rs.rate < 5 %}-o empty{% endif %}" style="font-size: large ; color: rgba(255, 196, 0, 0.65);"></i>
+                      </div>
+                  </div>
+              <div><a href="#"><i class="fa fa-envelope-open-o" style="font-size: large ; color: black;"></i> {{ rs.subject }}</a></div>
+                  <div class="review-body" style="font-size: large ; border: grey;">
+                    <p>{{ rs.comment }}</p>
+                  </div>
+              </div>
+
+          {% endfor %}
+       
+
+              
+          </div>
+      </div>
+    
+      <div class="col-md-6" style = "border: solid grey; padding-left:5px;margin-left: 10px; border: solid rgb(226, 168, 168);border-radius: 15px 15px 15px 15px; color: black; background-color: rgb(223, 204, 204); " >
+          <h4 class="text-uppercase" style="margin-right: 305px; border:rgba(255, 196, 0, 0.65); font-size: x-large;">Write Your Review</h4>
+          <h4 style = "background-color: yellow; margin-right: 290px; font-size: small; ">For sending a review, you must be logged in.</h4>
+
+
+          <form method="post">
+            {% csrf_token %}
+
+              <div class="form-group">
+                  <input class="input" type="text" name="subject" id="id_subject" style = "border:1px solid grey; border-radius: 5px 5px 5px 5px; color: black;font-size: large; padding-right: 60px; padding-bottom: 10px; align-items: center; background-color: rgb(238, 225, 225);" placeholder="Your Subject" required />
+              </div>
+
+              <div class="form-group">
+                  <textarea class="input" placeholder="Your Review" name="comment" id="id_comment" style = "border:1px solid grey; border-radius: 5px 5px 5px 5px; font-size: large; color: black; padding-right: 50px; text-align: justify; background-color: rgb(238, 225, 225);" required></textarea>
+              </div>
+              <div class="form-group">
+                  <div class="star-rating" >
+                      <strong class="text-" style="font-size: large;"  >Your Rating: </strong>
+                      <span class="stars">
+                        <input type="radio" id="star5" name="rate" value="5" /><label for="star5"></label>
+                        <input type="radio" id="star4" name="rate" value="4" /><label for="star4"></label>
+                        <input type="radio" id="star3" name="rate" value="3" /><label for="star3"></label>
+                        <input type="radio" id="star2" name="rate" value="2" /><label for="star2"></label>
+                        <input type="radio" id="star1" name="rate" value="1" /><label for="star1"></label>
+                      </span>
+                  </div>             
+              </div>
+             
+           
+              {% if user.id is not None%}               
+                <button class="primary-btn" style="border-radius:  5px 5px 5px 5px; background-color: rgba(103, 185, 103, 0.644); font-size: large; padding: 10px;">Submit</button>
+                <br> </br>
+
+
+              {% else %}
+                Please <a href="{% url 'dappx:user_login' %}">login</a> to send a comment!
+                <br> </br>
+
+              {% endif %}
+
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+<br> </br>
+<br> </br>
+<br> </br>
+
+
+
+
+
+
+{% endblock %}
+
+</body>
+</html>

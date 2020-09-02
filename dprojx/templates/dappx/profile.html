@@ -1,0 +1,126 @@
+{% extends "dappx/base.html" %}
+{% block body_block %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.card {
+  box-shadow: 8px 8px 18px 8px rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+  border-radius: 5px;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+img {
+  border-radius: 15px 15px 0 0;
+}
+
+.container {
+  padding: 2px 16px;
+}
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  justify-content: center;
+  position: relative;
+}
+.button2 {
+  background-color:rgb(189, 64, 64); 
+  color: white; 
+}
+
+.button2:hover {
+  background-color: rgb(207, 121, 121);
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<h2 style="background-color:rgb(152, 187, 144); width:auto; height:47px; padding-top:5.5px; text-align: center;  " class="card"> &nbsp My Profile</h2>
+
+<div style=" width:auto;" class="card">
+  <div class="container">
+        {% if user.email %}
+          <h3><b>Email: </b> {{ user.email }} </h3>
+        {% else %}
+          <h3><b>Email:</b> Not specified</h3>
+        {% endif %}
+
+        {% if user.username %}
+        <h3><b>Username: </b>{{ user.username }} </h3>
+        {% else %}
+        <h3><b>Username:</b> Not specified</h3>
+        {% endif %}
+
+        {% if user.first_name %}
+        <h3><b>First name: </b>{{ user.first_name }} </h3>
+        {% else %}
+        <h3><b>First name:</b> Not specified</h3>
+        {% endif %}
+
+        {% if user.last_name %}
+        <h3><b>Last name: </b> {{ user.last_name }}</h3>
+        {% else %}
+        <h3><b>Last name: </b> Not specified</h3>
+        {% endif %}
+
+        {% if user.userprofileinfo.age %}
+        <h3><b>Age: </b> {{ user.userprofileinfo.age }}</h3>
+        {% else %}
+        <h3><b>Age: </b> Not specified</h3>
+        {% endif %}
+
+        {% if user.userprofileinfo.gender %}
+        <h3><b>Gender: </b> {{ user.userprofileinfo.gender }}</h3>
+        {% else %}
+        <h3><b>Gender: </b> Not specified</h3>
+        {% endif %}
+
+        {% if user.userprofileinfo.address %}
+        <h3><b>Address: </b> {{ user.userprofileinfo.address }}</h3>
+        {% else %}
+        <h3><b>Address: </b> Not specified</h3>
+        {% endif %}
+
+        {% if user.userprofileinfo.city %}
+        <h3><b>City: </b> {{ user.userprofileinfo.city }}</h3>
+        {% else %}
+        <h3><b>City: </b> Not specified</h3>
+        {% endif %}
+
+        {% if user.userprofileinfo.country %}
+        <h3><b>Country: </b> {{ user.userprofileinfo.country }}</h3>
+        {% else %}
+        <h3><b>Country: </b> Not specified</h3>
+        {% endif %}
+
+        <a href="{% url 'dappx:edit_profile' %}" class="button button2" style="left: 80%;">Change profile info</a>
+  </div>
+</div>
+
+</body>
+</html> 
+
+
+    
+
+{% endblock %}
+

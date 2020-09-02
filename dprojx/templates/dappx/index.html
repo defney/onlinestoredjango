@@ -1,0 +1,138 @@
+{% extends "dappx/base.html" %}
+{% block body_block %}
+{% load static %}
+{% load mathfilters %}
+
+<style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+.discount_price {
+  color: grey;
+  font-size: 18px;
+}
+.no_discount {
+  color: white;
+  font-size: 18px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  opacity: 0.9; 
+  /* filter: brightness(98%);  */
+}
+.grid-container {
+  display: grid;
+  grid-gap: 50px;
+  grid-template-columns: auto auto auto;
+  /* background-color: #2196F3; */
+  padding: 10px;
+}
+
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+</style>
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    
+<div class="container" >
+  <div class="jumbotron" style="width: 1100px; height:500px; text-align: center; background: url('/static/image/buyuk.png') no-repeat;  background-size: 100%; opacity: 1;" > 
+    
+    <h1 class="" style="text-align: center; color:rgb(0, 0, 0);"> <em>Welcome to bringSU!</em></h1>
+    {% if user.is_authenticated %}
+    <h3 style="color: rgb(0, 0, 0);" > <b>Hello {{ user.username }}, you can view all the products here!</b></h3><h2></h2>
+    {% else %}
+        <h3 style="color: rgb(0, 0, 0);" > <b>Register or Login if you'd like to!</b></h3>
+        <h3 style=" color:rgb(0, 0, 0);"> <b>You can view all the products here!</b></h3>
+        
+    {% endif %}
+
+  </div>
+
+<div class="grid-container">
+
+    
+      {% for rs in product %}
+        
+        <div class="card">
+          <img src="{{rs.image.url}}"alt ="" style="width:100%;">
+          <h1>{{rs.name}}</h1>
+          <p class="price">{{rs.price}} tl</p>
+          {% if rs.changedprice != rs.price %}
+          <p class="discount_price "><em>Discounted price: {{rs.changedprice}} TL</em> </p>
+          <p class="discount_price ">{{rs.price|sub:rs.changedprice}} TL Saved!</p>
+          {% else %}
+          <p class="no_discount">DISCOUNTED PRICE: -</p>
+          <p class="no_discount">0 TL Saved</p>
+          {% endif %}
+          <p>Stock: {{rs.stock|floatformat:0}} </p>
+          <p>{{rs.ShortDesc}}</p>
+          <p><form method='GET' action="{% url 'dappx:details' product_id=rs.id %}"><button style="background: #a6ce7e;" >Details</button></form></p>
+          <p>
+            <form method='GET' action="{% url 'dappx:cart' pr_id=rs.id %}"><button style="background: #d9534f;" type="submit" >Add to Cart</button></form>
+          </p>
+        </div>
+          {% endfor %}
+</div>
+
+ 
+        
+	</div>
+  	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+      <script>
+      //Get the button
+      var mybutton = document.getElementById("myBtn");
+      
+      // When the user scrolls down 20px from the top of the document, show the button
+      window.onscroll = function() {scrollFunction()};
+      
+      function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+          mybutton.style.display = "block";
+        } else {
+          mybutton.style.display = "none";
+        }
+      }
+      
+      // When the user clicks on the button, scroll to the top of the document
+      function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }
+      </script>
+
+</div>
+{% endblock %}

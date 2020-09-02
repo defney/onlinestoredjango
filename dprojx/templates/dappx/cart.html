@@ -1,0 +1,151 @@
+{% extends "dappx/base.html" %}
+{% block body_block %}
+<style>
+    .row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  margin: 0 -16px;
+}
+
+.col-25 {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+}
+
+.col-50 {
+  -ms-flex: 50%; /* IE10 */
+  flex: 50%;
+}
+
+.col-75 {
+  -ms-flex: 75%; /* IE10 */
+  flex: 75%;
+}
+
+.col-25,
+.col-50,
+.col-75 {
+  padding: 0 16px;
+}
+
+ .container1 {
+  background-color: #f2f2f2;
+ padding: 5px 20px 15px 20px; 
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  margin-left: 145px;
+} 
+.container2 {
+  background-color: #f2f2f2;
+ padding: 5px 20px 15px 20px; 
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+} 
+
+input[type=text] {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.icon-container {
+  margin-bottom: 20px;
+  padding: 7px 0;
+  font-size: 24px;
+}
+
+.checkoutbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.checkoutbt:hover {
+  background-color: #45a049;
+}
+
+span.price {
+  float: right;
+  color: grey;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
+@media (max-width: 800px) {
+  .row {
+    flex-direction: column-reverse;
+  }
+  .col-25 {
+    margin-bottom: 20px;
+  }
+}
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <div class="col-25">
+      <div class="container2">
+        <h4>Sepetim
+          <span class="price" style="color:black">
+            <i class="fa fa-shopping-cart"></i>
+            {% if cartProducts  %}
+            <b >{{cartProducts.length}}</b>
+            {% endif %} 
+          </span>
+        </h4>
+        {% if cartProducts  %}
+
+        {% for cpr in cartProducts %} 
+ 
+        <p><a>{{cpr.product.name}}  {{cpr.itemquantity}} x {{cpr.itemPrice}} TL</a> <span class="price">{{cpr.totalCost}} tl</span><form method='GET' action="{% url 'dappx:remove_item' pr_id=cpr.itemID %}"><button class="btn btn-danger mt-3" type="submit" >Kaldır</button></form></p>
+        <!-- <button style="float: center;">Kaldır</button> -->
+        
+        {% endfor %}
+
+
+        <hr>
+        {% if tcost > 0 %}
+        <p>Toplam <span class="price" style="color:black"><b>{{tcost|floatformat:2}} tl</b></span></p>
+        {% endif %} 
+        
+        {% else %}
+        <p style="text-align:center">Alışveriş Sepetiniz Boş</p>
+        <p style="text-align:center">Biraz gezinmeye ne dersin?</p>
+        <p style="text-align:center"><a class="button" href="{% url 'dappx:index' %}">Alışverişe Başla</a></p>
+        {% endif %} 
+
+      </div>
+    </div>
+    <br>
+    <label>Ödeme tipi : </label>
+    <label style="text-indent: 45px;">
+      <form method="GET">
+        <input type="radio"  name="creditcart"> Kredi Kartı
+        <input type="radio"  name="cash" style="margin-left: 40px;"> Nakit / Kapıda Ödeme
+      </form>
+    </label>
+    <br>
+    <label>
+      <input type="checkbox" checked="checked" name="sameadr"> Teslimat adresi ve fatura adresi aynı
+    </label>
+    <form  action="{% url 'dappx:checkout' %}"><button class="checkoutbtn">Ödeme Yap</button></form>
+  </form>
+  <!-- </div>  -->
+
+<!-- </div> -->
+{% endblock %}

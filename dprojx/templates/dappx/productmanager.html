@@ -1,0 +1,25 @@
+{% extends "dappx/base.html" %}
+{% load mathfilters %}
+{% block body_block %}
+{% load static %}
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<div class="container" >
+<div class="jumbotron" style="width: 1100px; height:320px; text-align: center; background: url('static/image/veg3.jpg') no-repeat;  background-size: 100%; opacity: 1;" >
+    
+    <h1 class="" style="text-align: center;">Welcome to BringSU!</h1>
+    {% if user.is_authenticated %}
+        <h2>Hello {{ user.username }}, you can view all the products here!</h2>
+    {% else %}
+        <h2>Register or Login if you'd like to!</h2>
+        <h2>You can view all the products here!</h2>
+    {% endif %}
+</div>
+
+
+</div>
+
+{% endblock %}

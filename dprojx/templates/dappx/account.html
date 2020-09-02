@@ -1,0 +1,98 @@
+{% extends "dappx/base.html" %}
+{% block body_block %}
+{% load static %}
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<style>
+.card {
+  box-shadow: 8px 8px 18px 8px rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 80%;
+  border-radius: 5px;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+img {
+  border-radius: 15px 15px 0 0;
+}
+
+.container {
+  padding: 2px 16px;
+}
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  justify-content: center;
+  position: relative;
+  left: -4px;
+}
+.button2 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid rgb(188, 144, 209);
+}
+
+.button2:hover {
+  background-color: rgb(133, 81, 155);
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<h2 style="background-color:rgb(152, 187, 144); width:auto; height:47px; padding-top:5.5px; text-align: center; " class="card"> &nbsp My Account</h2>
+
+
+  <div class="container">
+    <div class="col-sm-6">
+        <div class="card w3-panel w3-border"  >
+          <div class="card-group col-xs-4" style="display: flex;">
+              <div class="card-img-overlay d-flex justify-content-end" >
+                <img src="{% static '/image/profilepic.png' %}" alt="" style="height: 350px; width: 350px;" />
+                <a href="{% url 'dappx:profile' %}" class="card-link text-danger like" style="padding-left: 120px; font-size:25px;"> My profile</a>
+              </div>
+    </div>
+  </div>
+</div>
+
+    <div class="col-sm-6">
+        <div class="card w3-panel w3-border"  >
+          <div class="card-group col-xs-4" style="display: flex;">
+              <div class="card-img-overlay d-flex justify-content-end" >
+                <img src="{% static '/image/shoppingbasket.png' %}" alt="" style="height: 350px; width: 350px;" />
+                <a href="{% url 'dappx:view_orders' %}"  class="card-link text-danger like" style="padding-left: 120px; font-size:25px;"> My orders</a>
+              </div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html> 
+
+
+{% endblock %}
+

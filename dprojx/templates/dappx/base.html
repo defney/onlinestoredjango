@@ -1,0 +1,218 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Base</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+
+    <style>
+   body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(4, 48, 18);
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 15px;
+  cursor: pointer;
+  background-color: #ECEFF1;
+  color: rgb(13, 133, 53);
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color:rgb(186, 198, 206);
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 5px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+    .main {
+      margin-left: 160px; /* Same as the width of the sidenav */
+      font-size: 28px; /* Increased text to enable scrolling */
+      padding: 0px 10px;
+    }
+    .ex1 {
+      padding-top: 2.5%;
+      }
+
+      .button {
+  background-color: #ddd;
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 16px;
+}  
+    
+    @media screen and (max-height: 450px) {
+      .sidenav {padding-top: 15px;}
+      .sidenav a {font-size: 18px;}
+    }
+    div.a {
+    width: 200px;
+    }
+      
+    #myBtn {
+      display: none; /* Hidden by default */
+      position: fixed; /* Fixed/sticky position */
+      bottom: 20px; /* Place the button at the bottom of the page */
+      right: 30px; /* Place the button 30px from the right */
+      z-index: 99; /* Make sure it does not overlap */
+      border: none; /* Remove borders */
+      outline: none; /* Remove outline */
+      background-color:#d9534f ; /* Set a background color */
+      color: white; /* Text color */
+      cursor: pointer; /* Add a mouse pointer on hover */
+      padding: 15px; /* Some padding */
+      border-radius: 10px; /* Rounded corners */
+      font-size: 18px; /* Increase font size */
+    }
+
+    #myBtn:hover {
+      background-color: #a6ce7e; /* Add a dark-grey background on hover */
+    }
+
+
+    </style>
+</head>
+<body>    
+  <nav class="navbar navbar-light" style="background-color: #ECEFF1;  " >
+    <div class="container">
+      <div class="topnav">
+        <ul class="nav navbar-nav">
+        <li>
+
+         
+        <div id="mySidebar" class="sidebar">
+          {% for CategoryName in category%}
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+          <a class="dropdown-item" href="{% url 'dappx:category' category_name=CategoryName %}">{{ CategoryName }}</a>
+          {% endfor %}
+        </div>
+
+        <div id="main">
+          <button class="openbtn" onclick="openNav()"><i class="fa fa-align-justify"></i> Kategoriler</button>  
+        
+        </div>
+
+        <script>
+        function openNav() {
+          document.getElementById("mySidebar").style.width = "200px";
+          document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+          document.getElementById("mySidebar").style.width = "0";
+          document.getElementById("main").style.marginLeft= "0";
+        }
+        </script>
+      </li>
+
+      
+    
+        
+         
+          <!--li><a class="navbar-brand fa fa-home w3-large"href="{% url 'index' %}"></a></li--->
+          <li><a class="button" href="{% url 'index' %}" style="width: 50px; height:40px; text-align: center; background: url('/static/image/1284_600_b.jpg') no-repeat; background-size: 100%; opacity: 1;" >             </a></li>
+            
+          <li>
+            <form class="form-inline ml-auto ex1" action="{% url 'dappx:search' %}" method="GET" value="{{request.GET.q}}">
+              <input  type="text" name="q" value="{{request.GET.q}}" class="form-control mr-sm-2 ex1"   placeholder="Search...">
+              <input type="submit" class="btn btn-outline-light ex1" name="submit" value="Search"/>
+          <!--<a><button type="submit" class="btn btn-outline-light" method="get">Search</button></a-->
+            </form>
+           
+        </li>
+        
+        
+      	
+        
+      </ul>
+
+
+        <ul class="nav navbar-nav navbar-right" >
+          <li><a class="navbar-link"  style ="color:rgb(13, 133, 53);" href="{% url 'dappx:cart' pr_id=-1 %}" ><i class="fa fa-shopping-cart w3-large" style ="color:rgb(13, 133, 53);"></i>Sepetim</a></li>
+          {# Some logic on what to display for last item#}
+          {% if user.is_authenticated %}
+              <li><a href="{% url 'account' %}" style ="color:rgb(13, 133, 53);"><i class="glyphicon glyphicon-user"></i>Hello, {{user.username}}</a></li>
+              <li><a href="{% url 'logout' %}" style ="color:rgb(13, 133, 53);"><i class="fa fa-sign-out"  style ="color:rgb(13, 133, 53);"></i>Logout</a></li>
+              {% else %}
+              <li><a class="navbar-link"  style ="color:rgb(13, 133, 53);" href="{% url 'admin:index' %}" style ="color:rgb(13, 133, 53);">Admin</a></li>
+              <li><a class="navbar-link" style ="color:rgb(13, 133, 53);" href="{% url 'dappx:register' %}"><span class="glyphicon glyphicon-user"  style ="color:rgb(13, 133, 53);"></span>Register</a></li>     
+              <li><a class="navbar-link"  style ="color:rgb(13, 133, 53);" href="{% url 'dappx:user_login' %}"><span class="glyphicon glyphicon-log-in" style ="color:rgb(13, 133, 53);"></span></i>Login</a></li>
+          {% endif %}
+
+        </ul>
+          
+    </div>
+    </nav>
+    <div class="container">
+    {% block body_block %}
+    {% endblock %}
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
